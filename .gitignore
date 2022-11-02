@@ -1,3 +1,5 @@
-/main.js
+# Ignore built files
+build/main.js
+build/style.css
+
 /node_modules
-/style.css

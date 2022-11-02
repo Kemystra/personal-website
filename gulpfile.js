@@ -10,6 +10,9 @@ const dartSass = require("sass");
 const gulpSass = require("gulp-sass");
 const sassPlugin = gulpSass(dartSass);
 
+// Params specific to this project
+const buildFolder = "./build";
+
 // Gulp always passes a callback function as 1st argument in a task
 // This can be used to mark end of task.
 
@@ -35,7 +38,7 @@ function jsx(cb) {
         .transform(babelTransform)
         .bundle()
         .pipe(source("main.js"))
-        .pipe(dest("./"));
+        .pipe(dest(buildFolder));
 }
 
 function cleanJSX(cb) {
@@ -45,7 +48,7 @@ function cleanJSX(cb) {
     return b.transform(babelTransform)
         .bundle()
         .pipe(source("main.js"))
-        .pipe(dest("./"));
+        .pipe(dest(buildFolder));
 }
 
 function scss(cb) {
@@ -53,7 +56,7 @@ function scss(cb) {
     return src("./src/scss/*.scss")
         .pipe(sassPlugin.sync().on("error", sassPlugin.logError))
         .pipe(rename("style.css"))
-        .pipe(dest("./"));
+        .pipe(dest(buildFolder));
 }
 
 exports.watch = parallel(

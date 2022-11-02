@@ -38,6 +38,16 @@ function jsx(cb) {
         .pipe(dest("./"));
 }
 
+function cleanJSX(cb) {
+    var b = browserify("./src/jsx/main.jsx");
+    b.plugin("tinyify");
+
+    return b.transform(babelTransform)
+        .bundle()
+        .pipe(source("main.js"))
+        .pipe(dest("./"));
+}
+
 function scss(cb) {
 
     return src("./src/scss/*.scss")
@@ -50,4 +60,5 @@ exports.watch = parallel(
     function watchJSX() { watch("./src/scss/*.scss", scss) },
     function watchSCSS() { watch("./src/jsx/*.jsx", jsx) } 
     );
-exports.build = parallel(scss, jsx);
+exports.dev = parallel(scss, jsx);
+exports.build = cleanJSX;
